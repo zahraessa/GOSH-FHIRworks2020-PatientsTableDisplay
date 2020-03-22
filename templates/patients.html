@@ -1,0 +1,90 @@
+<!DOCTYPE html>
+<html lang="en">
+
+
+<!-- patients23:17-->
+<head>
+    <meta charset="utf-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0, user-scalable=0">
+    <link rel="shortcut icon" type="image/x-icon" href="static/img/favicon.ico">
+    <title>Patients</title>
+    <link rel="stylesheet" type="text/css" href="static/css/bootstrap.min.css">
+    <link rel="stylesheet" type="text/css" href="static/css/font-awesome.min.css">
+    <link rel="stylesheet" type="text/css" href="static/css/select2.min.css">
+    <link rel="stylesheet" type="text/css" href="static/css/dataTables.bootstrap4.min.css">
+    <link rel="stylesheet" type="text/css" href="static/css/bootstrap-datetimepicker.min.css">
+    <link rel="stylesheet" type="text/css" href="static/css/style.css">
+    <!--[if lt IE 9]>
+		<script src="static/js/html5shiv.min.js"></script>
+		<script src="static/js/respond.min.js"></script>
+	<![endif]-->
+</head>
+
+<body>
+    <div class="main-wrapper">
+        <div class="header">
+			<div class="header-left">
+				<a href="/" class="logo">
+					<img src="{{ url_for('static', filename='img/logo-new.svg') }}" height="50" alt="">
+				</a>
+			</div>
+			<a id="toggle_btn" href="javascript:void(0);"><i class="fa fa-bars"></i></a>
+            <a id="mobile_btn" class="mobile_btn float-left" href="#sidebar"><i class="fa fa-bars"></i></a>
+
+        </div>
+        <div class="page-wrapper">
+            <div class="content">
+                <div class="row">
+                    <div class="col-sm-4 col-3">
+                        <h4 class="page-title">Patients</h4>
+                    </div>
+                </div>
+				<div class="row">
+					<div class="col-md-12">
+						<div class="table-responsive">
+							<table class="table table-border table-striped custom-table datatable mb-0">
+								<thead>
+									<tr>
+										<th>Name</th>
+										<th>ID</th>
+                                        <th>DOB</th>
+										<th>Phone</th>
+									</tr>
+								</thead>
+								<tbody>
+                                    {% for patient in patients %}
+                                            <tr>
+                                                <td><a href="/patients/{{ patient.uuid }}">{{patient.name}}</a></td>
+                                                <a href="/patients/{{ patient.uuid }}"><td>{{patient.uuid}}</td></a>
+                                                <a href="/patients/{{ patient.uuid }}"><td>{{ patient.birth_date }}</td></a>
+                                                <a href="/patients/{{ patient.uuid }}"><td>
+                                                    {% for t in patient.telecoms %}
+                                                        {{t}}
+                                                    {% endfor %}
+                                                </td></a>
+                                            </tr>
+                                    {%  endfor %}
+								</tbody>
+							</table>
+						</div>
+					</div>
+                </div>
+            </div>
+		</div>
+    </div>
+    <div class="sidebar-overlay" data-reff=""></div>
+    <script src="static/js/jquery-3.2.1.min.js"></script>
+	<script src="static/js/popper.min.js"></script>
+    <script src="static/js/bootstrap.min.js"></script>
+    <script src="static/js/jquery.slimscroll.js"></script>
+    <script src="static/js/select2.min.js"></script>
+    <script src="static/js/jquery.dataTables.min.js"></script>
+    <script src="static/js/dataTables.bootstrap4.min.js"></script>
+    <script src="static/js/moment.min.js"></script>
+    <script src="static/js/bootstrap-datetimepicker.min.js"></script>
+    <script src="static/js/app.js"></script>
+</body>
+
+
+<!-- patients23:19-->
+</html>

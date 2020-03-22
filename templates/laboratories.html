@@ -1,0 +1,110 @@
+<!DOCTYPE html>
+<html lang="en">
+
+
+<!-- patients23:17-->
+<head>
+    <meta charset="utf-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0, user-scalable=0">
+    <link rel="shortcut icon" type="image/x-icon" href="static/img/favicon.ico">
+    <title>Patient</title>
+    <link rel="stylesheet" type="text/css" href="{{ url_for('static', filename='css/bootstrap.min.css') }}">
+    <link rel="stylesheet" type="text/css" href="{{ url_for('static', filename='css/font-awesome.min.css') }}">
+    <link rel="stylesheet" type="text/css" href="{{ url_for('static', filename='css/select2.min.css') }}">
+    <link rel="stylesheet" type="text/css" href="{{ url_for('static', filename='css/style.css') }}">
+    <!--[if lt IE 9]>
+		<script src="{{ url_for('static', filename='js/html5shiv.min.js') }}"></script>
+		<script src="{{ url_for('static', filename='js/respond.min.js') }}"></script>
+	<![endif]-->
+</head>
+<body>
+    <div class="main-wrapper">
+        <div class="header">
+			<div class="header-left">
+				<a href="/" class="logo">
+					<img src="{{ url_for('static', filename='img/logo-new.svg') }}" height="50" alt="">
+				</a>
+			</div>
+			<a id="toggle_btn" href="javascript:void(0);"><i class="fa fa-bars"></i></a>
+            <a id="mobile_btn" class="mobile_btn float-left" href="#sidebar"><i class="fa fa-bars"></i></a>
+
+        </div>
+        <div class="sidebar" id="sidebar">
+            <div class="sidebar-inner slimscroll">
+                <div id="sidebar-menu" class="sidebar-menu">
+                    <ul>
+                        <li>
+                            <a href="/patients"><i class="fa fa-wheelchair"></i> <span>Patients</span></a>
+                        </li>
+                        <li>
+                            <a href="/patients/{{ pid }}"><i class="fa fa-wheelchair"></i> <span>Patient Profile</span></a>
+                            <li>
+                                <a href="/vitalsigns/{{ pid }}"><i class="fa fa-calendar-check-o"></i> <span>Vital Signs</span></a>
+                            </li>
+                            <li class="active">
+                                <a href="/laboratories/{{ pid }}"><i class="fa fa-calendar-check-o"></i> <span>Laboratories</span></a>
+                            </li>
+                            <li>
+                                <a href="/surveys/{{ pid }}"><i class="fa fa-calendar-check-o"></i> <span>Surveys</span></a>
+                            </li>
+                        </li>
+                    </ul>
+                </div>
+            </div>
+        </div>
+        <div class="page-wrapper">
+            <div class="content">
+                <div class="row">
+                    <div class="col-sm-4 col-3">
+                        <h4 class="page-title">{{ page }}</h4>
+                    </div>
+                </div>
+				<div class="row">
+					<div class="col-md-12">
+						<div class="table-responsive">
+							<table class="table table-striped custom-table">
+								<thead>
+									<tr>
+										<th>Patient ID</th>
+										<th>Observation ID</th>
+										<th>Observation Date and Time</th>
+										<th>Encounter ID</th>
+										<th>Observation Type</th>
+										<th>Status</th>
+									</tr>
+								</thead>
+								<tbody>
+                                    {% for observation in observations %}
+                                        <tr>
+                                            <td>{{ observation.patient_uuid }}</td>
+                                            <td>{{ observation.uuid }}</td>
+                                            <td>{{ observation.effective_datetime }}</td>
+                                            <td>{{ observation.encounter_uuid}}</td>
+                                            <td>{{ observation.type }}</td>
+                                            <td>{{ observation.status }}</td>
+                                        </tr>
+                                    {% endfor %}
+								</tbody>
+							</table>
+						</div>
+					</div>
+                </div>
+            </div>
+		</div>
+    </div>
+    <div class="sidebar-overlay" data-reff=""></div>
+    <script src="{{ url_for('static', filename='js/jquery-3.2.1.min.js') }}"></script>
+    <script src="{{ url_for('static', filename='js/popper.min.js') }}"></script>
+    <script src="{{ url_for('static', filename='js/bootstrap.min.js') }}"></script>
+    <script src="{{ url_for('static', filename='js/jquery.slimscroll.js') }}"></script>
+    <script src="{{ url_for('static', filename='js/select2.min.js') }}"></script>
+    <script src="{{ url_for('static', filename='js/jquery.dataTables.min.js') }}"></script>
+    <script src="{{ url_for('static', filename='js/dataTables.bootstrap4.min.js') }}"></script>
+    <script src="{{ url_for('static', filename='js/moment.min.js') }}"></script>
+    <script src="{{ url_for('static', filename='js/bootstrap-datetimepicker.min.js') }}"></script>
+    <script src="{{ url_for('static', filename='js/app.js') }}"></script>
+</body>
+
+
+<!-- patients23:19-->
+</html>

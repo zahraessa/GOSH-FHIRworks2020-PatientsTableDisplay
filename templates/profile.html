@@ -1,0 +1,183 @@
+<!DOCTYPE html>
+<html lang="en">
+
+
+<!-- profile22:59-->
+<head>
+    <meta charset="utf-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0, user-scalable=0">
+    <link rel="shortcut icon" type="image/x-icon" href="static/img/favicon.ico">
+    <title>Patient</title>
+    <link rel="stylesheet" type="text/css" href="{{ url_for('static', filename='css/bootstrap.min.css') }}">
+    <link rel="stylesheet" type="text/css" href="{{ url_for('static', filename='css/font-awesome.min.css') }}">
+    <link rel="stylesheet" type="text/css" href="{{ url_for('static', filename='css/select2.min.css') }}">
+    <link rel="stylesheet" type="text/css" href="{{ url_for('static', filename='css/style.css') }}">
+    <!--[if lt IE 9]>
+		<script src="{{ url_for('static', filename='js/html5shiv.min.js') }}"></script>
+		<script src="{{ url_for('static', filename='js/respond.min.js') }}"></script>
+	<![endif]-->
+</head>
+
+<body>
+    <div class="main-wrapper">
+    <div class="header">
+			<div class="header-left">
+				<a href="/" class="logo">
+					<img src="{{ url_for('static', filename='img/logo-new.svg') }}" height="50" alt="">
+				</a>
+			</div>
+			<a id="toggle_btn" href="javascript:void(0);"><i class="fa fa-bars"></i></a>
+            <a id="mobile_btn" class="mobile_btn float-left" href="#sidebar"><i class="fa fa-bars"></i></a>
+
+        </div>
+        <div class="sidebar" id="sidebar">
+            <div class="sidebar-inner slimscroll">
+                <div id="sidebar-menu" class="sidebar-menu">
+                    <ul>
+                        <li>
+                            <a href="/patients"><i class="fa fa-wheelchair"></i> <span>Patients</span></a>
+                        </li>
+                        <li class="active">
+                            <a href="/patients/{{ patient.uuid }}"><i class="fa fa-wheelchair"></i> <span>Patient Profile</span></a>
+                            <li>
+                                <a href="/vitalsigns/{{ patient.uuid }}"><i class="fa fa-calendar-check-o"></i> <span>Vital Signs</span></a>
+                            </li>
+                            <li>
+                                <a href="/laboratories/{{ patient.uuid }}"><i class="fa fa-calendar-check-o"></i> <span>Laboratories</span></a>
+                            </li>
+                            <li>
+                                <a href="/surveys/{{ patient.uuid }}"><i class="fa fa-calendar-check-o"></i> <span>Surveys</span></a>
+                            </li>
+                        </li>
+                    </ul>
+                </div>
+            </div>
+        </div>
+        <div class="page-wrapper">
+            <div class="content">
+                <div class="row">
+                    <div class="col-sm-7 col-6">
+                        <h4 class="page-title">My Profile</h4>
+                    </div>
+                </div>
+                <div class="card-box profile-header">
+                    <div class="row">
+                        <div class="col-md-12">
+                            <div class="profile-view">
+                                <div class="profile-basic">
+                                    <div class="row">
+                                        <div class="col-md-5">
+                                            <h3 class="user-name m-t-0 mb-0">{{ patient.name }}</h3>
+                                            <div class="staff-id">Patient ID : {{ patient.uuid }}</div>
+                                        </div>
+                                        <div class="col-md-7">
+                                            <ul class="personal-info">
+                                                <li>
+                                                    <span class="title">Phone:</span>
+                                                    <span class="text">
+                                                        {% for t in patient.telecoms %}
+                                                            {{t}}
+                                                        {% endfor %}
+                                                    </span>
+                                                </li>
+                                                <li>
+                                                    <span class="title">Marital Status:</span>
+                                                    <span class="text">{{ patient.marital_status }}</span>
+                                                </li>
+                                                <li>
+                                                    <span class="title">Communications:</span>
+                                                    <span class="text">{{ patient.communications }}</span>
+                                                </li>
+                                                <li>
+                                                    <span class="title">Additional Information:</span>
+                                                    <span class="text">
+                                                        {% for t in patient.extensions %}
+                                                            {{t}}
+                                                            <br>
+                                                        {% endfor %}
+                                                    </span>
+                                                </li>
+                                                <li>
+                                                    <span class="title">Date of Birth:</span>
+                                                    <span class="text">{{ patient.birth_date }}</span>
+                                                </li>
+                                                <li>
+                                                    <span class="title">Address:</span>
+                                                    <span class="text">
+                                                        {% for a in patient.addresses %}
+                                                            {{a}}
+                                                        {% endfor %}
+                                                    </span>
+                                                </li>
+                                                <li>
+                                                    <span class="title">Gender:</span>
+                                                    <span class="text">{{ patient.gender }}</span>
+                                                </li>
+                                            </ul>
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>                        
+                        </div>
+                    </div>
+                </div>
+                <div class="content">
+                <div class="row">
+                    <div class="col-sm-4 col-3">
+                        <h4 class="page-title">Observations</h4>
+                    </div>
+                </div>
+				<div class="row">
+					<div class="col-md-12">
+						<div class="table-responsive">
+							<table class="table table-striped custom-table">
+								<thead>
+									<tr>
+										<th>Observation ID</th>
+										<th>Observation Date and Time</th>
+										<th>Encounter ID</th>
+										<th>Observation Type</th>
+										<th>Observation Components</th>
+										<th>Status</th>
+									</tr>
+								</thead>
+								<tbody>
+                                    {% for observation in observations %}
+                                        <tr>
+                                            <td>{{ observation.uuid }}</td>
+                                            <td>{{ observation.effective_datetime }}</td>
+                                            <td>{{ observation.encounter_uuid}}</td>
+                                            <td>{{ observation.type }}</td>
+                                            <td>{%  for c in observation.components %}
+                                                {{ c }}
+                                                <br>
+                                                <br>
+                                                {% endfor %}
+                                            </td>
+                                            <td>{{ observation.status }}</td>
+                                        </tr>
+                                    {% endfor %}
+								</tbody>
+							</table>
+						</div>
+					</div>
+                </div>
+            </div>
+            </div>
+        </div>
+    </div>
+
+    <script src="{{ url_for('static', filename='js/jquery-3.2.1.min.js') }}"></script>
+    <script src="{{ url_for('static', filename='js/popper.min.js') }}"></script>
+    <script src="{{ url_for('static', filename='js/bootstrap.min.js') }}"></script>
+    <script src="{{ url_for('static', filename='js/jquery.slimscroll.js') }}"></script>
+    <script src="{{ url_for('static', filename='js/select2.min.js') }}"></script>
+    <script src="{{ url_for('static', filename='js/jquery.dataTables.min.js') }}"></script>
+    <script src="{{ url_for('static', filename='js/dataTables.bootstrap4.min.js') }}"></script>
+    <script src="{{ url_for('static', filename='js/moment.min.js') }}"></script>
+    <script src="{{ url_for('static', filename='js/bootstrap-datetimepicker.min.js') }}"></script>
+    <script src="{{ url_for('static', filename='js/app.js') }}"></script>
+
+</body>
+<!-- profile23:03-->
+</html>
